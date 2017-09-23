@@ -54,7 +54,7 @@ function love.update(dt)
 		for i = 1, math.pow(2, waveNumber-1) do
 			-- spawn enemies for the wave randomly in a circle
 			local f = math.random() * 2 * math.pi
-			local r = love.graphics.getWidth() + .5*love.graphics.getWidth()*math.random()
+			local r = love.graphics.getWidth() + .25*love.graphics.getWidth()*math.random()
 			local x = math.cos(f) * r + love.graphics.getWidth()/2
 			local y = math.sin(f) * r + love.graphics.getHeight()/2
 			table.insert(enemies, Enemy(x, y, player))

@@ -16,7 +16,7 @@ function Enemy:init(x, y, target)
 	self.color = {255, 0, 0}
 	self.health = 100
 	self.attack = 25 -- deals this amount of damage if it reaches the player
-	self.speed = 10
+	self.speed = 200
 end
 
 function Enemy:update(dt)
