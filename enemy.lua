@@ -1,5 +1,5 @@
 --[[
-A simple zombielike enemy that walks towards the player in a straight line
+A simple zombielike enemy that walks towards the the location it's passed in a straight line
 ]]
 
 Class = require "class"
@@ -15,14 +15,14 @@ function Enemy:init(x, y, target)
 	self.height = 100
 	self.color = {255, 0, 0}
 	self.health = 100
-	self.damage = 25 -- deals this amount of damage if it reaches the player
+	self.attack = 25 -- deals this amount of damage if it reaches the player
 	self.speed = 10
 end
 
 function Enemy:update(dt)
 	local f = math.atan2(self.target.y - self.y, self.target.x - self.x)
-	self.x = self.x + math.cos(f)*self.speed
-	self.y = self.y + math.sin(f)*self.speed
+	self.x = self.x + math.cos(f)*self.speed * dt
+	self.y = self.y + math.sin(f)*self.speed * dt
 	self:checkCollideWithTarget()
 end
 
@@ -36,7 +36,7 @@ function Enemy:checkCollideWithTarget()
 	if self.health > 0 then
 		if rectangleCollisionCheck(self.target.x, self.target.y, self.target.width, self.target.height, self.x, self.y, self.width, self.height) then
 			-- it hit the enemy
-			self.target.health = math.max(0, self.target.health - self.damage)
+			self.target.health = math.max(0, self.target.health - self.attack)
 			self.health = 0
 		end
 	end

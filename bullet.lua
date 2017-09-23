@@ -11,7 +11,7 @@ Make enemies that fire bullets at the player!
 
 Class = require "class"
 
-Bullet = Class{}
+Bullet = Class()
 
 function Bullet:init(x, y, f, r, speed, color)
 	self.x = x
@@ -22,7 +22,7 @@ function Bullet:init(x, y, f, r, speed, color)
 	self.speed = speed or 50
 	self.color = color or {255, 0, 0}
 	self.active = true
-	self.damage = 50 -- the amount of damage to do to an enemy.
+	self.attack = 50 -- the amount of damage to do to an enemy.
 end
 
 function Bullet:update(dt)
@@ -47,7 +47,7 @@ function Bullet:checkEnemyCollision(enemy)
 		-- it may not be active because it may have hit another enemy earlier in the loop
 		if rectangleCollisionCheck(enemy.x, enemy.y, enemy.width, enemy.height, self.x, self.y, 2*self.r, 2*self.r) then
 			-- that isn't a good way to do circle/rectangle collision, but it works for our purposes
-			enemy.health = math.max(0, enemy.health - self.damage)
+			enemy.health = math.max(0, enemy.health - self.attack)
 			self.active = false
 		end
 	end

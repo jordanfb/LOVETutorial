@@ -1,6 +1,7 @@
 --[[
 A simple player class that is controlled via keyboard and mouse
-Some obvious problems:
+
+Some things you may want to try fixing:
 - you walk faster diagonally than straight
 - there's no way to determine what health you're at
 - there's no way to determine whether your weapons are reloaded
@@ -9,11 +10,12 @@ Some obvious problems:
 Class = require "class"
 require "bullet"
 
-Player = Class{}
+Player = Class()
 
 
 function Player:init(health)
-	self.health = 100--health or 100
+	self.maxHealth = 100
+	self.health = self.maxHealth
 	self.speed = 200
 	self.x = 0
 	self.y = 0
@@ -22,9 +24,7 @@ function Player:init(health)
 	self.width = 50
 	self.height = 100
 
-	self.swordCooldown = .25
 	self.gunCooldown = .1
-	self.swordTimer = 0
 	self.gunTimer = 0
 end
 
@@ -43,24 +43,18 @@ function Player:update(dt)
 
 
 	-- then check if the player is attacking and attack!
-	local f = math.atan2(love.mouse.getY() - self.y, love.mouse.getX() - self.x)
+	local f = math.atan2(love.mouse.getY() - self.y, love.mouse.getX() - self.x) -- get the angle between the mouse and the player
 	if love.mouse.isDown(1) then
-		-- the left mouse is down, fire bullets
+		-- the left mouse button is down, fire bullets
 		if self.gunTimer <= 0 then
 			-- make a bullet
 			local b = Bullet(self.x, self.y, f)
 			addBullet(b) -- this is a function in the main file which just adds a bullet to the table
 			self.gunTimer = self.gunCooldown
 		end
-	elseif love.mouse.isDown(2) then
-		-- sword thing
-		self.swordTimer = self.swordCooldown
 	end
 	if self.gunTimer > 0 then
 		self.gunTimer = self.gunTimer - dt
-	end
-	if self.swordTimer > 0 then
-		self.swordTimer = self.swordTimer - dt
 	end
 end
 
